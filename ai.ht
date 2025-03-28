@@ -1,0 +1,24 @@
+graph TD
+    A[Homepage] --> B[Dashboard]
+    A --> C[Projects]
+    A --> D[Calendar]
+    A --> E[Documents]
+    
+    B --> F[Tasks]
+    B --> G[Analytics]
+    B --> H[Team Activity]
+    
+    C --> I[Project List]
+    C --> J[Create Project]
+    I --> K[Project Details]
+    K --> L[Kanban Board]
+    K --> M[Timeline]
+    K --> N[Files]
+    
+    E --> O[Upload]
+    E --> P[Recent Files]
+    E --> Q[Shared Documents]
+    
+    D --> R[Meetings]
+    D --> S[Deadlines]
+    D --> T[Team Schedule]
