@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Profile | SpacePrep</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0d6efd;
+            --secondary: #6610f2;
+            --dark: #212529;
+            --light: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .team-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 100px 0 60px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .team-logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-top: -75px;
+            position: relative;
+            z-index: 2;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary);
+        }
+        
+        .team-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            background-color: white;
+        }
+        
+        .stats-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .stats-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stats-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-transform: uppercase;
+        }
+        
+        .skill-badge {
+            display: inline-block;
+            background-color: #e9ecef;
+            padding: 5px 15px;
+            border-radius: 50px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .activity-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s ease;
+        }
+        
+        .activity-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+        }
+        
+        .progress-bar {
+            border-radius: 4px;
+        }
+        
+        .tab-content {
+            padding: 20px 0;
+        }
+        
+        .nav-tabs .nav-link {
+            border: none;
+            color: #6c757d;
+            font-weight: 500;
+            padding: 12px 20px;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .member-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .member-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .project-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .project-icon {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        .milestone {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .milestone::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background-color: #dee2e6;
+        }
+        
+        .milestone:last-child::before {
+            height: 15px;
+        }
+        
+        .milestone-dot {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            border: 3px solid white;
+        }
+        
+        @media (max-width: 768px) {
+            .team-header {
+                padding: 80px 0 40px;
+            }
+            
+            .team-logo {
+                width: 100px;
+                height: 100px;
+                margin-top: -50px;
+                font-size: 2rem;
+            }
+            
+            .member-avatar {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-rocket me-2"></i>SpacePrep
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home me-1"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="projects.html">
+                            <i class="fas fa-project-diagram me-1"></i> Projects
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="docs.html">
+                            <i class="fas fa-file-alt me-1"></i> Docs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="schedule.html">
+                            <i class="fas fa-calendar-alt me-1"></i> Schedule
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user me-1"></i> Profile
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i>My Profile</a></li>
+                            <li><a class="dropdown-item active" href="team-profile.html"><i class="fas fa-users me-2"></i>Team Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="team-header">
+        <div class="container text-center">
+            <div class="team-logo">
+                <span>SA</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-4">
+        <div class="row mb-4">
+            <div class="col text-center">
+                <h2>Stellar Analytics</h2>
+                <p class="lead text-muted">NASA Space Apps Challenge 2025 Team</p>
+                <div class="d-flex justify-content-center mb-3">
+                    <span class="badge bg-primary me-2">Data Visualization</span>
+                    <span class="badge bg-success">Machine Learning</span>
+                    <span class="badge bg-info">Astrophysics</span>
+                </div>
+                <div class="d-flex justify-content-center mb-3">
+                    <a href="#" class="btn btn-sm btn-outline-secondary mx-1">
+                        <i class="fab fa-github me-1"></i> GitHub
+                    </a>
+                    <a href="#" class="btn btn-sm btn-outline-primary mx-1">
+                        <i class="fab fa-linkedin me-1"></i> LinkedIn
+                    </a>
+                    <a href="#" class="btn btn-sm btn-outline-info mx-1">
+                        <i class="fab fa-twitter me-1"></i> Twitter
+                    </a>
+                </div>
+                <button class="btn btn-primary me-2">
+                    <i class="fas fa-envelope me-1"></i> Contact Team
+                </button>
+                <button class="btn btn-outline-primary">
+                    <i class="fas fa-user-plus me-1"></i> Join Team
+                </button>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-3 mb-4">
+                <div class="stats-card">
+                    <div class="stats-number">4</div>
+                    <div class="stats-label">Team Members</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="stats-card">
+                    <div class="stats-number">3</div>
+                    <div class="stats-label">Active Projects</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="stats-card">
+                    <div class="stats-number">7</div>
+                    <div class="stats-label">Completed Challenges</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="stats-card">
+                    <div class="stats-number">2025</div>
+                    <div class="stats-label">Current Challenge</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="team-card">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>About Our Team</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-4">We are a multidisciplinary team of data scientists, developers, and astrophysicists passionate about making space data accessible through innovative visualizations and machine learning applications. Formed in 2020, we've participated in multiple NASA challenges with award-winning projects.</p>
+                        
+                        <h6 class="mb-3"><i class="fas fa-map-marker-alt me-2"></i>Location</h6>
+                        <p class="mb-4">Pasadena, California (Remote team members across US and Europe)</p>
+                        
+                        <h6 class="mb-3"><i class="fas fa-calendar-alt me-2"></i>Formed</h6>
+                        <p class="mb-4">June 2020</p>
+                        
+                        <h6 class="mb-3"><i class="fas fa-trophy me-2"></i>Achievements</h6>
+                        <ul class="list-unstyled mb-0">
+                            <li><i class="fas fa-award text-warning me-2"></i>2024 Global Finalists</li>
+                            <li><i class="fas fa-award text-warning me-2"></i>2023 People's Choice Award</li>
+                            <li><i class="fas fa-award text-warning me-2"></i>2022 Best Data Visualization</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="team-card mt-4">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0"><i class="fas fa-star me-2"></i>Team Skills</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="skill-badge">
+                            <i class="fab fa-python me-1"></i> Python
+                        </div>
+                        <div class="skill-badge">
+                            <i class="fas fa-chart-line me-1"></i> Data Visualization
+                        </div>
+                        <div class="skill-badge">
+                            <i class="fas fa-brain me-1"></i> Machine Learning
+                        </div>
+                        <div class="skill-badge">
+                            <i class="fas fa-database me-1"></i> Big Data
+                        </div>
+                        <div class="skill-badge">
+                            <i class="fab fa-js me-1"></i> JavaScript
+                        </div>
+                        <div class="skill-badge">
+                            <i class="fas fa-satellite-dish me-1"></i> Remote Sensing
+                        </div>
+                        <div class="skill-badge">
+                            <i class="fas fa-meteor me-1"></i> Astrophysics
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h6 class="mb-3">Team Strengths</h6>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Data Analysis</span>
+                                    <span>95%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Visualization</span>
+                                    <span>90%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Project Management</span>
+                                    <span>85%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card mt-4">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0"><i class="fas fa-calendar-check me-2"></i>Upcoming Events</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="milestone">
+                            <div class="milestone-dot"></div>
+                            <h6 class="mb-1">Team Workshop</h6>
+                            <p class="small text-muted mb-1">Data Visualization Techniques</p>
+                            <small class="text-muted"><i class="far fa-clock me-1"></i>June 15, 2025</small>
+                        </div>
+                        <div class="milestone">
+                            <div class="milestone-dot"></div>
+                            <h6 class="mb-1">Mentor Session</h6>
+                            <p class="small text-muted mb-1">With Dr. Sarah Chen</p>
+                            <small class="text-muted"><i class="far fa-clock me-1"></i>June 22, 2025</small>
+                        </div>
+                        <div class="milestone">
+                            <div class="milestone-dot"></div>
+                            <h6 class="mb-1">Project Deadline</h6>
+                            <p class="small text-muted mb-1">Phase 1 Submission</p>
+                            <small class="text-muted"><i class="far fa-clock me-1"></i>July 5, 2025</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-8">
+                <div class="team-card">
+                    <div class="card-header bg-white">
+                        <ul class="nav nav-tabs" id="teamTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="members-tab" data-bs-toggle="tab" data-bs-target="#members" type="button" role="tab">
+                                    <i class="fas fa-users me-1"></i> Members
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="projects-tab" data-bs-toggle="tab" data-bs-target="#projects" type="button" role="tab">
+                                    <i class="fas fa-project-diagram me-1"></i> Projects
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="timeline-tab" data-bs-toggle="tab" data-bs-target="#timeline" type="button" role="tab">
+                                    <i class="fas fa-history me-1"></i> Timeline
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="tab-content" id="teamTabsContent">
+                            <!-- Members Tab -->
+                            <div class="tab-pane fade show active" id="members" role="tabpanel">
+                                <div class="p-3">
+                                    <div class="member-card">
+                                        <div class="d-flex align-items-start">
+                                            <img src="https://randomuser.me/api/portraits/women/44.jpg" class="member-avatar me-3">
+                                            <div class="flex-grow-1">
+                                                <h4>Dr. Sarah Chen</h4>
+                                                <p class="text-muted mb-2">Team Lead | Astrophysicist</p>
+                                                <p>Specializes in data visualization of astronomical phenomena. NASA Space Apps Challenge mentor since 2019.</p>
+                                                <div class="d-flex">
+                                                    <a href="#" class="btn btn-sm btn-outline-secondary me-2">
+                                                        <i class="fab fa-github me-1"></i>
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-outline-primary me-2">
+                                                        <i class="fab fa-linkedin me-1"></i>
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-outline-info">
+                                                        <i class="fas fa-envelope me-1"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="member-card">
+                                        <div class="d-flex align-items-start">
+                                            <img src="https://randomuser.me/api/portraits/men/32.jpg" class="member-avatar me-3">
+                                            <div class="flex-grow-1">
+                                                <h4>Michael Rodriguez</h4>
+                                                <p class="text-muted mb-2">Data Scientist</p>
+                                                <p>Expert in machine learning and big data analysis. Develops algorithms for processing astronomical datasets.</p>
+                                                <div class="d-flex">
+                                                    <a href="#" class="btn btn-sm btn-outline-secondary me-2">
+                                                        <i class="fab fa-github me-1"></i>
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-outline-primary me-2">
+                                                        <i class="fab fa-linkedin me-1"></i>
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-outline-info">
+                                                        <i class="fas fa-envelope me-1"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="member-card">
+                                        <div class="d-flex align-items-start">
+                                            <img src="https://randomuser.me/api/portraits/women/63.jpg" class="member-avatar me-3">
+                                            <div class="flex-grow-1">
+                                                <h4>Emma Zhang</h4>
+                                                <p class="text-muted mb-2">Frontend Developer</p>
+                                                <p>Creates interactive web applications for visualizing complex space data. Focuses on user experience and accessibility.</p>
+                                                <div class="d-flex">
+                                                    <a href="#" class="btn btn-sm btn-outline-secondary me-2">
+                                                        <i class="fab fa-github me-1"></i>
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-outline-primary me-2">
+                                                        <i class="fab fa-linkedin me-1"></i>
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-outline-info">
+                                                        <i class="fas fa-envelope me-1"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="member-card">
+                                        <div class="d-flex align-items-start">
+                                            <img src="https://randomuser.me/api/portraits/men/75.jpg" class="member-avatar me-3">
+                                            <div class="flex-grow-1">
+                                                <h4>David Kim</h4>
+                                                <p class="text-muted mb-2">ML Engineer</p>
+                                                <p>Develops machine learning models for classifying celestial objects and predicting space weather patterns.</p>
+                                                <div class="d-flex">
+                                                    <a href="#" class="btn btn-sm btn-outline-secondary me-2">
+                                                        <i class="fab fa-github me-1"></i>
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-outline-primary me-2">
+                                                        <i class="fab fa-linkedin me-1"></i>
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-outline-info">
+                                                        <i class="fas fa-envelope me-1"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-center mt-3">
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-user-plus me-2"></i>Invite New Member
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Projects Tab -->
+                            <div class="tab-pane fade" id="projects" role="tabpanel">
+                                <div class="p-3">
+                                    <div class="d-flex align-items-center mb-4">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas fa-project-diagram fa-2x text-primary"></i>
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h5 class="mb-0">Team Projects</h5>
+                                            <small class="text-muted">Current and past challenge projects</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="project-card">
+                                        <div class="d-flex align-items-start">
+                                            <div class="flex-shrink-0">
+                                                <i class="fas fa-globe-americas project-icon"></i>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h4>Exoplanet Explorer</h4>
+                                                <p class="text-muted">Interactive visualization of exoplanet data from Kepler and TESS missions</p>
+                                                <div class="d-flex flex-wrap mb-3">
+                                                    <span class="badge bg-light text-dark me-2 mb-2"><i class="fas fa-calendar me-1"></i>2024</span>
+                                                    <span class="badge bg-light text-dark me-2 mb-2"><i class="fas fa-users me-1"></i>4 contributors</span>
+                                                    <span class="badge bg-light text-dark me-2 mb-2"><i class="fas fa-trophy me-1"></i>Global Finalist</span>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <a href="#" class="btn btn-sm btn-outline-primary me-2">
+                                                        <i class="fas fa-external-link-alt me-1"></i>View Project
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-outline-secondary">
+                                                        <i class="fab fa-github me-1"></i>Source Code
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="project-card">
+                                        <div class="d-flex align-items-start">
+                                            <div class="flex-shrink-0">
+                                                <i class="fas fa-fire project-icon"></i>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h4>Wildfire Tracker</h4>
+                                                <p class="text-muted">Real-time monitoring of wildfires using NASA satellite data</p>
+                                                <div class="d-flex flex-wrap mb-3">
+                                                    <span class="badge bg-light text-dark me-2 mb-2"><i class="fas fa-calendar me-1"></i>2023</span>
+                                                    <span class="badge bg-light text-dark me-2 mb-2"><i class="fas fa-users me-1"></i>3 contributors</span>
+                                                    <span class="badge bg-light text-dark me-2 mb-2"><i class="fas fa-trophy me-1"></i>People's Choice</span>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <a href="#" class="btn btn-sm btn-outline-primary me-2">
+                                                        <i class="fas fa-external-link-alt me-1"></i>View Project
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-outline-secondary">
+                                                        <i class="fab fa-github me-1"></i>Source Code
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="project-card">
+                                        <div class="d-flex align-items-start">
+                                            <div class="flex-shrink-0">
+                                                <i class="fas fa-satellite project-icon"></i>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h4>Space Weather Dashboard</h4>
+                                                <p class="text-muted">Real-time monitoring of solar activity and space weather events</p>
+                                                <div class="d-flex flex-wrap mb-3">
+                                                    <span class="badge bg-light text-dark me-2 mb-2"><i class="fas fa-calendar me-1"></i>2025 (Current)</span>
+                                                    <span class="badge bg-light text-dark me-2 mb-2"><i class="fas fa-users me-1"></i>4 contributors</span>
+                                                    <span class="badge bg-light text-dark me-2 mb-2"><i class="fas fa-hourglass-half me-1"></i>In Progress</span>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <a href="#" class="btn btn-sm btn-outline-primary me-2">
+                                                        <i class="fas fa-external-link-alt me-1"></i>View Project
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-outline-secondary">
+                                                        <i class="fab fa-github me-1"></i>Source Code
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-center mt-3">
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-plus me-2"></i>Create New Project
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Timeline Tab -->
+                            <div class="tab-pane fade" id="timeline" role="tabpanel">
+                                <div class="p-3">
+                                    <div class="d-flex align-items-center mb-4">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas fa-history fa-2x text-primary"></i>
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h5 class="mb-0">Team Timeline</h5>
+                                            <small class="text-muted">Key milestones and achievements</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="milestone">
+                                        <div class="milestone-dot"></div>
+                                        <h5 class="mb-1">Team Formation</h5>
+                                        <p class="text-muted mb-1">Initial team assembled through NASA Space Apps network</p>
+                                        <small class="text-muted"><i class="far fa-clock me-1"></i>June 2020</small>
+                                    </div>
+                                    
+                                    <div class="milestone">
+                                        <div class="milestone-dot"></div>
+                                        <h5 class="mb-1">First Challenge</h5>
+                                        <p class="text-muted mb-1">Participated in NASA Space Apps 2020 with "Galaxy Classifier" project</p>
+                                        <small class="text-muted"><i class="far fa-clock me-1"></i>October 2020</small>
+                                    </div>
+                                    
+                                    <div class="milestone">
+                                        <div class="milestone-dot"></div>
+                                        <h5 class="mb-1">First Award</h5>
+                                        <p class="text-muted mb-1">Won "Best Data Visualization" for "Ocean Currents Explorer"</p>
+                                        <small class="text-muted"><i class="far fa-clock me-1"></i>2022</small>
+                                    </div>
+                                    
+                                    <div class="milestone">
+                                        <div class="milestone-dot"></div>
+                                        <h5 class="mb-1">People's Choice</h5>
+                                        <p class="text-muted mb-1">"Wildfire Tracker" project won People's Choice Award</p>
+                                        <small class="text-muted"><i class="far fa-clock me-1"></i>2023</small>
+                                    </div>
+                                    
+                                    <div class="milestone">
+                                        <div class="milestone-dot"></div>
+                                        <h5 class="mb-1">Global Finalists</h5>
+                                        <p class="text-muted mb-1">"Exoplanet Explorer" selected as Global Finalist</p>
+                                        <small class="text-muted"><i class="far fa-clock me-1"></i>2024</small>
+                                    </div>
+                                    
+                                    <div class="milestone">
+                                        <div class="milestone-dot"></div>
+                                        <h5 class="mb-1">Current Challenge</h5>
+                                        <p class="text-muted mb-1">Working on "Space Weather Dashboard" for 2025 challenge</p>
+                                        <small class="text-muted"><i class="far fa-clock me-1"></i>2025</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-rocket me-2"></i>SpacePrep</h5>
+                    <p class="mt-2">NASA Space Apps Challenge 2025 Preparation Workspace</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">&copy; 2025 SpacePrep. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize tooltips
+        document.addEventListener('DOMContentLoaded', function() {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+        });
+    </script>
+</body>
+</html>
